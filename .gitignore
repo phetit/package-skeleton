@@ -1,4 +1,8 @@
 # Compsoser
-composer.phar
-composer.lock
+/composer.phar
+/composer.lock
 /vendor/
+
+# PHPUnit
+/phpunit.xml
+/.phpunit.cache/
