@@ -36,5 +36,15 @@
         "phpstan/phpstan-strict-rules": "^1.5",
         "phpstan/phpstan-deprecation-rules": "^1.1",
         "squizlabs/php_codesniffer": "^3.7"
+    },
+    "scripts": {
+        "test:lint": "./vendor/bin/phpcs",
+        "test:unit": "./vendor/bin/phpunit",
+        "test:types": "./vendor/bin/phpstan",
+        "test": [
+            "@test:lint",
+            "@test:types",
+            "@test:unit"
+        ]
     }
 }
