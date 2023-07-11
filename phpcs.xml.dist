@@ -16,10 +16,4 @@
     <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter" />
     <rule ref="Generic.Strings.UnnecessaryStringConcat" />
     <rule ref="Generic.Formatting.SpaceAfterNot" />
-
-    <rule ref="Squiz.ControlStructures.ControlSignature">
-        <properties>
-            <property name="requiredSpacesBeforeColon" value="0" />
-        </properties>
-    </rule>
 </ruleset>
