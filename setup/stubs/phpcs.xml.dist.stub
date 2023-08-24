@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="Custom Standard" namespace="MyProject\CS\Standard">
-    <description>Package Template</description>
+    <description>{{ packageName }}</description>
 
     <file>src/</file>
     <file>tests/</file>

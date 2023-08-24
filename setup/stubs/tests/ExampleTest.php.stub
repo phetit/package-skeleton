@@ -1,8 +1,10 @@
 <?php
 
-namespace Phetit\PackageTemplate\Tests;
+declare(strict_types=1);
 
-use Phetit\PackageTemplate\Example;
+namespace {{ namespace }}\Tests;
+
+use {{ namespace }}\Example;
 use PHPUnit\Framework\TestCase;
 
 /**
