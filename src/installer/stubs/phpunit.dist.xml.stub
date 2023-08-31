@@ -14,7 +14,7 @@
   cacheDirectory=".phpunit.cache"
 >
     <testsuites>
-        <testsuite name="{{ packageName }} Test Suit">
+        <testsuite name="{{ vendor }} {{ package }} Test Suit">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
