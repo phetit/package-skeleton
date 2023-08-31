@@ -27,14 +27,9 @@
         "symfony/validator": "^6.3",
         "symfony/string": "^6.3"
     },
-    "minimum-stability": "stable",
-    "prefer-stable": true,
     "scripts": {
-        "post-root-package-install": [
-            "@php setup/index.php"
-        ],
         "post-create-project-cmd": [
-            "@php composer install"
+            "@php setup.php"
         ]
     }
 }
