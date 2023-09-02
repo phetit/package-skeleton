@@ -1,2 +1,2 @@
 # {{ vendor }} {{ package }}
-This repository provides a template for your PHP package.
+{{ description }}
