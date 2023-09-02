@@ -14,29 +14,41 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class Installer
 {
+    protected SymfonyStyle $io;
+
+    protected string $rootPath;
+
+    protected string $installerPath;
+
+    protected string $stubsPath;
+
     public function __construct(protected string $name, protected string $version)
     {
+        $this->io = new SymfonyStyle(new ArgvInput(), new ConsoleOutput());
+        $this->rootPath = realpath('.');
+        $this->installerPath = "{$this->rootPath}/src/installer";
+        $this->stubsPath = "{$this->installerPath}/stubs";
     }
 
     public function run(): void
     {
-        $io = new SymfonyStyle(new ArgvInput(), new ConsoleOutput());
+        $this->io->title("{$this->name}: {$this->version}");
 
-        $io->title("{$this->name}: {$this->version}");
+        $this->io->section('Configurations');
+        $configurations = (new InputCollector($this->io))->run();
 
-        $io->section('Configurations');
-        $packageInfo = (new InputCollector($io))->run();
-
-        $io->definitionList(
+        $this->io->definitionList(
             'Configurations',
             new TableSeparator(),
             ...array_map(function ($index, $value) {
                 return [$index => $value];
-            }, array_keys($packageInfo), array_values($packageInfo)),
+            }, array_keys($configurations), array_values($configurations)),
         );
 
-        $io->section('Generating stubs');
-        $stubs = new StubGenerator('stubs', $io);
-        $stubs->with($packageInfo)->generate('.');
+        $configurations['composer.namespace'] = str_replace('\\', '\\\\', $configurations['namespace']);
+
+        $this->io->section('Generating stubs');
+        $stubs = new StubGenerator($this->stubsPath, $this->io);
+        $stubs->with($configurations)->generate($this->rootPath);
     }
 }

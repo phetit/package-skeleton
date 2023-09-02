@@ -18,9 +18,10 @@ class InputCollector
 
     protected array $packageInfo = [
         'vendor' => '',
-        'title' => '',
-        'namespace' => '',
         'package' => '',
+        'namespace' => '',
+        'composer.package' => '',
+        'description' => '',
         'author' => '',
         'email' => '',
         'copyright' => '',
@@ -41,9 +42,10 @@ class InputCollector
     protected function requestAll(): void
     {
         $this->requestVendor();
-        $this->requestTitle();
+        $this->requestPackageName();
         $this->requestNamespace();
-        $this->requestPackage();
+        $this->requestComposerPackageName();
+        $this->requestComposerDescription();
         $this->requestAuthorName();
         $this->requestAuthorEmail();
         $this->requestCopyright();
@@ -53,7 +55,7 @@ class InputCollector
     protected function requestVendor(): void
     {
         $this->packageInfo['vendor'] = $this->io->ask(
-            'Provide the vendor name (example: MyVendor)',
+            'Vendor name (example: MyVendor)',
             validator: Validation::createCallable(new NotBlank(), new Regex([
                 'pattern' => '/^([A-Z][a-zA-Z]*)+$/',
                 'message' => 'Vendor name should be PascalCase without spaces',
@@ -61,10 +63,10 @@ class InputCollector
         );
     }
 
-    protected function requestTitle(): void
+    protected function requestPackageName(): void
     {
-        $this->packageInfo['title'] = $this->io->ask(
-            'Provide the package title (example: My Awesome Package)',
+        $this->packageInfo['package'] = $this->io->ask(
+            'Package name (example: My Awesome Package)',
             validator: Validation::createCallable(new NotBlank(), new Regex([
                 'pattern' => '/^[a-zA-Z0-9]([\w -]*[a-zA-Z0-9])*$/',
                 'message' => 'Package name should contain only letters, numbers, hyphen, underscore and spaces',
@@ -72,16 +74,17 @@ class InputCollector
         );
 
         $vendor = u($this->packageInfo['vendor']);
-        $package = u($this->packageInfo['title']);
+        $package = u($this->packageInfo['package']);
 
         $this->packageInfo['namespace'] = "{$vendor}\\{$package->camel()->title()}";
-        $this->packageInfo['package'] = "{$vendor->lower()}/{$package->snake()->replace('_', '-')}";
+        $this->packageInfo['composer.package'] = "{$vendor->lower()}/{$package->snake()->replace('_', '-')}";
+        $this->packageInfo['description'] = "Description for {$vendor} {$package}.";
     }
 
     protected function requestNamespace(): void
     {
         $this->packageInfo['namespace'] = $this->io->ask(
-            'Provide the package\'s namespace (pointing to "src/")',
+            'Package namespace (pointing to "src/")',
             $this->packageInfo['namespace'],
             Validation::createCallable(new Regex([
                 'pattern' => '/^[A-Z][a-zA-Z0-9_]*(\\\\[A-Z][a-zA-Z0-9_]*)*$/',
@@ -90,22 +93,30 @@ class InputCollector
         );
     }
 
-    protected function requestPackage(): void
+    protected function requestComposerPackageName(): void
     {
-        $this->packageInfo['package'] = $this->io->ask(
-            'Provide the package\'s name',
-            $this->packageInfo['package'],
+        $this->packageInfo['composer.package'] = $this->io->ask(
+            'Composer package name',
+            $this->packageInfo['composer.package'],
             Validation::createCallable(new Regex([
                 'pattern' => '/^[a-z0-9](-?[a-z0-9]+)*\/[a-z0-9](-?[a-z0-9]+)*$/',
-                'message' => "Packages's name should be of type \"{$this->packageInfo['package']}\"",
+                'message' => "Packages's name should be of type \"{$this->packageInfo['composer.package']}\"",
             ])),
+        );
+    }
+
+    protected function requestComposerDescription(): void
+    {
+        $this->packageInfo['description'] = $this->io->ask(
+            'Package description',
+            $this->packageInfo['description'],
         );
     }
 
     protected function requestAuthorName(): void
     {
         $this->packageInfo['author'] = $this->io->ask(
-            'Provide author\'s name',
+            'Author\'s name',
             $this->packageInfo['vendor']
         );
     }
@@ -113,7 +124,7 @@ class InputCollector
     protected function requestAuthorEmail(): void
     {
         $this->packageInfo['email'] = $this->io->ask(
-            'Provide author\'s email',
+            'Author\'s email',
             validator: Validation::createCallable(new Email(), new NotBlank()),
         );
     }
@@ -121,7 +132,7 @@ class InputCollector
     protected function requestCopyright(): void
     {
         $this->packageInfo['copyright'] = $this->io->ask(
-            'Provide copyright',
+            'Copyright',
             $this->packageInfo['author']
         );
     }
@@ -129,7 +140,7 @@ class InputCollector
     protected function requestPHPVersion(): void
     {
         $this->packageInfo['php'] = $this->io->choice(
-            'Select PHP version',
+            'PHP version',
             static::PHP_VERSIONS,
             $this->packageInfo['php']
         );

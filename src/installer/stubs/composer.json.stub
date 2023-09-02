@@ -1,7 +1,7 @@
 {
     "name": "{{ composer.package }}",
     "type": "library",
-    "description": "{{ composer.description }}",
+    "description": "{{ description }}",
     "keywords": [
         "template",
         "php package",
