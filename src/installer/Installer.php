@@ -55,6 +55,8 @@ class Installer
         $stubs->with($configurations)->generate($this->rootPath);
 
         $this->io->section('Setting up repository');
+        $git = new Git($this->rootPath);
+        $composer = new Composer($this->rootPath);
 
         $this->io->info('Cleaning installation files');
         FileSystem::rmdir($this->installerPath);
@@ -65,12 +67,9 @@ class Installer
         FileSystem::rmdir($this->rootPath . '/.git');
 
         $this->io->info('Updating composer dependencies');
-        (new Composer($this->rootPath))
-            ->install()
-            ->bump();
+        $composer->install()->bump();
 
         $this->io->info('Creating git repository');
-        $git = new Git($this->rootPath);
 
         if ($git->isAvailable) {
             $git->setup('Initial commit');
