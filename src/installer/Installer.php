@@ -62,6 +62,7 @@ class Installer
         FileSystem::rmdir($this->installerPath);
         unlink($this->rootPath . '/setup.php');
         FileSystem::rmdir($this->rootPath . '/vendor');
+        unlink($this->rootPath . '/composer.lock');
 
         $this->io->info('Removing .git folder');
         FileSystem::rmdir($this->rootPath . '/.git');
