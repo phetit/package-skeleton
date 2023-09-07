@@ -7,7 +7,9 @@ namespace Phetit\PackageSkeleton;
 use Composer\Script\Event;
 use Phetit\PackageSkeleton\Actions\InputCollector;
 use Phetit\PackageSkeleton\Actions\StubGenerator;
+use Phetit\PackageSkeleton\Component\Composer;
 use Phetit\PackageSkeleton\Component\FileSystem\FileSystem;
+use Phetit\PackageSkeleton\Component\Git;
 use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -52,16 +54,30 @@ class Installer
         $stubs = new StubGenerator($this->stubsPath, $this->io);
         $stubs->with($configurations)->generate($this->rootPath);
 
-        $this->io->section('Cleaning installation files');
+        $this->io->section('Setting up repository');
+
+        $this->io->info('Cleaning installation files');
         FileSystem::rmdir($this->installerPath);
         unlink($this->rootPath . '/setup.php');
+        FileSystem::rmdir($this->rootPath . '/vendor');
 
-        $this->io->section('Setting up repository');
+        $this->io->info('Removing .git folder');
         FileSystem::rmdir($this->rootPath . '/.git');
-        exec("git -C \"{$this->rootPath}\" init");
-        exec("git -C \"{$this->rootPath}\" add -A");
-        exec("git -C \"{$this->rootPath}\" commit -m 'Initial commit'");
 
-        $this->io->info('Process completed.');
+        $this->io->info('Updating composer dependencies');
+        (new Composer($this->rootPath))
+            ->install()
+            ->bump();
+
+        $this->io->info('Creating git repository');
+        $git = new Git($this->rootPath);
+
+        if ($git->isAvailable) {
+            $git->setup('Initial commit');
+        } else {
+            $this->io->warning('Git is not available. Skipping...');
+        }
+
+        $this->io->success('Process completed.');
     }
 }
