@@ -13,6 +13,7 @@ use Phetit\PackageSkeleton\Component\Git;
 use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class Installer
@@ -48,6 +49,9 @@ class Installer
             }, array_keys($configurations), array_values($configurations)),
         );
 
+        $this->io->ask('Press enter to continue...');
+        $bumpQuestion = new ConfirmationQuestion('Bump composer dependencies?', false);
+
         $configurations['composer.namespace'] = str_replace('\\', '\\\\', $configurations['namespace']);
 
         $this->io->section('Generating files');
@@ -68,7 +72,12 @@ class Installer
         FileSystem::rmdir($this->rootPath . '/.git');
 
         $this->io->info('Updating composer dependencies');
-        $composer->install()->bump();
+        $composer->install();
+
+        if ($this->io->askQuestion($bumpQuestion)) {
+            $this->io->info('Bumping dependencies');
+            $composer->bump();
+        }
 
         $this->io->info('Creating git repository');
 
