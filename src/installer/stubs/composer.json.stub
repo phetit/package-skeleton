@@ -2,12 +2,7 @@
     "name": "{{ composer.package }}",
     "type": "library",
     "description": "{{ description }}",
-    "keywords": [
-        "template",
-        "php package",
-        "php skeleton",
-        "php template"
-    ],
+    "keywords": [],
     "homepage": "https://github.com/{{ composer.package }}",
     "license": "MIT",
     "authors": [
