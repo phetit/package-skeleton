@@ -38,6 +38,7 @@ class Installer
     {
         $this->io->title("{$this->name}: {$this->version}");
 
+        // Get project data from user input
         $this->io->section('Configurations');
         $configurations = (new InputCollector($this->io))->run();
 
@@ -54,6 +55,7 @@ class Installer
 
         $configurations['composer.namespace'] = str_replace('\\', '\\\\', $configurations['namespace']);
 
+        // Generate project files
         $this->io->section('Generating files');
         $stubs = new StubGenerator($this->stubsPath, $this->io);
         $stubs->with($configurations)->generate($this->rootPath);
@@ -62,6 +64,7 @@ class Installer
         $git = new Git($this->rootPath);
         $composer = new Composer($this->rootPath);
 
+        // Remove installation files
         $this->io->info('Cleaning installation files');
         FileSystem::rmdir($this->installerPath);
         unlink($this->rootPath . '/setup.php');
@@ -71,6 +74,7 @@ class Installer
         $this->io->info('Removing .git folder');
         FileSystem::rmdir($this->rootPath . '/.git');
 
+        // Install composer dependencies
         $this->io->info('Updating composer dependencies');
         $composer->install();
 
@@ -79,13 +83,8 @@ class Installer
             $composer->bump();
         }
 
-        $this->io->info('Creating git repository');
-
-        if ($git->isAvailable) {
-            $git->setup('Initial commit');
-        } else {
-            $this->io->warning('Git is not available. Skipping...');
-        }
+        // Setup Git
+        $git->setup($this->io);
 
         $this->io->success('Process completed.');
     }
