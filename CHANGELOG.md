@@ -1,10 +1,20 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
 ## [Unreleased]
 
-- 🌱 Initial release
+### Added
+
+- Add interactive setup
+
+### Changed
+
+- Update `CONTRIBUTING.md`
+- Update `README.md`
+- Update PHPUnit version
+
+## [v1.0.0] - 2023-07-13
+
+- :seedling: Initial release
+
+[Unreleased]: https://github.com/phetit/package-skeleton/compare/v1.0.0...main
+[v1.0.0]: https://github.com/phetit/package-skeleton/releases/tag/v1.0.0
