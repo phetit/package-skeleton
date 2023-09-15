@@ -64,4 +64,4 @@ Pull requests are the best way to propose changes to the codebase. We actively w
 
 ## License
 
-By contributing, you agree that your contributions will be under the same [MIT License](./LICENSE) that covers the project.
+By contributing, you agree that your contributions will be under the same [**MIT License**](https://opensource.org/license/mit/) that covers the project.
