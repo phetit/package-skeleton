@@ -50,8 +50,11 @@ class Installer
             }, array_keys($configurations), array_values($configurations)),
         );
 
-        $this->io->ask('Press enter to continue...');
-        $bumpQuestion = new ConfirmationQuestion('Bump composer dependencies?', false);
+        if (! $this->io->confirm('You you want to continue with the set up process?', true)) {
+            $this->io->error('Process stopped');
+
+            return;
+        }
 
         $configurations['composer.namespace'] = str_replace('\\', '\\\\', $configurations['namespace']);
 
@@ -78,7 +81,7 @@ class Installer
         $this->io->info('Updating composer dependencies');
         $composer->install();
 
-        if ($this->io->askQuestion($bumpQuestion)) {
+        if ($this->io->confirm('Bump composer dependencies?', false)) {
             $this->io->info('Bumping dependencies');
             $composer->bump();
         }
