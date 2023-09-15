@@ -51,7 +51,8 @@ class Installer
         );
 
         if (! $this->io->confirm('You you want to continue with the set up process?', true)) {
-            $this->io->error('Process stopped');
+            $this->io->warning('Process stopped');
+            $this->io->info('Run `composer setup` command within your project folder to start the process again');
 
             return;
         }

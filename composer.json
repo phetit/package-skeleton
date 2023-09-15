@@ -28,6 +28,9 @@
         "symfony/string": "^6.3"
     },
     "scripts": {
+        "setup": [
+            "@post-create-project-cmd"
+        ],
         "post-create-project-cmd": [
             "@php setup.php"
         ]
