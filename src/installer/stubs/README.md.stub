@@ -1,2 +1,34 @@
 # {{ vendor }} {{ package }}
 {{ description }}
+
+> **Requires PHP {{ php }}+**
+
+## Usage
+
+:art: Run code style analysis using [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer):
+
+```bash
+composer test:lint
+```
+
+:hammer_and_wrench: Run static analysis using [PHPStan](https://phpstan.org/):
+
+```bash
+composer test:types
+```
+
+:white_check_mark: Run unit tests using [PHPUnit](https://phpunit.de/):
+
+```bash
+composer test:unit
+```
+
+:rocket: Run the entire test suit
+
+```bash
+composer test
+```
+
+## License
+
+This project is licensed under the [MIT license](./LICENSE).
