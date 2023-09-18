@@ -1,6 +1,6 @@
 <div align="center">
 
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/phetit/package-skeleton?display_name=tag&sort=semver)](https://github.com/phetit/package-skeleton/releases/latest)
+[![GitHub tag (with filter)](https://img.shields.io/github/v/tag/phetit/package-skeleton)](https://github.com/phetit/package-skeleton/releases/latest)
 [![Packagist](https://img.shields.io/packagist/v/phetit/package-skeleton)](https://packagist.org/packages/phetit/package-skeleton)
 [![GitHub](https://img.shields.io/github/license/phetit/package-skeleton)](https://github.com/phetit/package-skeleton/blob/main/LICENSE)
 
