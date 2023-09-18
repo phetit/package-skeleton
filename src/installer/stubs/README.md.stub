@@ -1,3 +1,13 @@
+<div align="center">
+
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/{{ composer.package }}?display_name=tag&sort=semver)](https://github.com/{{ composer.package }}/releases/latest)
+[![Packagist](https://img.shields.io/packagist/v/{{ composer.package }})](https://packagist.org/packages/{{ composer.package }})
+![Packagist PHP Version](https://img.shields.io/packagist/dependency-v/{{ composer.package }}/php?color=6e71a4)
+[![tests](https://github.com/{{ composer.package }}/actions/workflows/tests.yml/badge.svg)](https://github.com/{{ composer.package }}/actions/workflows/tests.yml?query=branch%3Amain)
+[![GitHub](https://img.shields.io/github/license/{{ composer.package }})](https://opensource.org/license/mit/)
+
+</div>
+
 # {{ vendor }} {{ package }}
 {{ description }}
 
