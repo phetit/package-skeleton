@@ -9,7 +9,7 @@ Thank you for investing your time in contributing to our project! :sparkles: We 
 
 ## Report a bug
 
-> If you find a security vulnerability, do NOT open an issue. Email david.lomberlan@gmail.com instead.
+> If you find a security vulnerability, do NOT open an issue. Email lombervid@proton.me instead.
 
 Before submitting [a new issue](./issues/new/choose), please search the [issues](./issues) to make sure a similar issue doesn't already exist. Assuming a similar issues doesn't exist, you can report a bug by [opening a new issue](./issues/new/choose).
 
